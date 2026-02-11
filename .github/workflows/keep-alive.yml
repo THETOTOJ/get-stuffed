@@ -2,8 +2,8 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    # Runs every 3 days at 9am UTC
-    - cron: '0 9 */3 * *'
+    # Runs every 2 days at 9am UTC
+    - cron: '0 9 */2 * *'
   workflow_dispatch: # Allows manual trigger
 
 jobs:
@@ -12,5 +12,12 @@ jobs:
     steps:
       - name: Ping Supabase
         run: |
-          curl -X GET "https://pjtdpwafdpknkufbpsxj.supabase.co/rest/v1/" \
-            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqdGRwd2FmZHBrbmt1ZmJwc3hqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0MjM0ODUsImV4cCI6MjA3Mjk5OTQ4NX0.P-kkoDqr7K2mqQzoLXMay-y68cRO5hWaU0sJVnAlfPk"
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X GET \
+            "https://pjtdpwafdpknkufbpsxj.supabase.co/rest/v1/" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqdGRwd2FmZHBrbmt1ZmJwc3hqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0MjM0ODUsImV4cCI6MjA3Mjk5OTQ4NX0.P-kkoDqr7K2mqQzoLXMay-y68cRO5hWaU0sJVnAlfPk" \
+            -H "Content-Type: application/json")
+          echo "Response code: $response"
+          if [ $response -ne 200 ]; then
+            echo "Failed to ping Supabase"
+            exit 1
+          fi
