@@ -205,7 +205,7 @@ export default function RecipeActions({ recipeId }: { recipeId: string }) {
             <div className="modal-body" style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               {collections.length === 0 && (
                 <p style={{ fontFamily: "var(--hand-font, 'Caveat', cursive)", fontSize: "1rem", color: "var(--muted)", marginBottom: "0.5rem" }}>
-                  No collections yet — create your first one below!
+                  No collections yet. Add one?
                 </p>
               )}
               {collections.map((c) => (

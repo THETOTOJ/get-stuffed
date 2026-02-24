@@ -227,7 +227,7 @@ export default function SortableImageUploader({
 
       {previews.length === 0 && (
         <p className="empty-hint">
-          Click to add photos — you can add multiple at once
+          Click to add photos, you can add multiple at once!
         </p>
       )}
 

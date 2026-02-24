@@ -56,7 +56,7 @@ export default function AdminPage() {
   // UI
   const [activeSection, setActiveSection] = useState<AdminSection>("users");
 
-  // ── Auth guard — runs first, redirects if not admin ──
+  // ── Auth guard
   useEffect(() => {
     async function checkAdmin() {
       const { data: { user } } = await supabase.auth.getUser();
@@ -506,7 +506,7 @@ export default function AdminPage() {
         {activeSection === "efforts" && (
           <AdminCard title="Effort Levels" icon={<Zap size={18} />}>
             <p style={{ fontFamily: "var(--hand-font, 'Caveat', cursive)", fontSize: "1rem", color: "var(--muted)", marginBottom: "1.25rem" }}>
-              Effort levels indicate how much time and skill a recipe requires — e.g. Easy, Weekend Project.
+              Effort levels indicate how much time and skill a recipe requires
             </p>
             <div style={{ display: "flex", gap: "0.6rem", marginBottom: "1.5rem" }}>
               <input

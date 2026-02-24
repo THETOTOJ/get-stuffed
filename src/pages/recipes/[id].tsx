@@ -296,7 +296,7 @@ export default function RecipePage() {
               {/* Title & author */}
               <h1 className="notebook-title">{recipe.title}</h1>
               {author && (
-                <p className="notebook-author">— by {author}</p>
+                <p className="notebook-author">- by {author}</p>
               )}
 
               {/* Meta chips + edit button */}
@@ -417,7 +417,7 @@ export default function RecipePage() {
 
               {comments.length === 0 ? (
                 <p style={{ fontFamily: "var(--hand-font, 'Caveat', cursive)", fontSize: "1rem", color: "var(--muted)", marginBottom: "1rem" }}>
-                  No notes yet — be the first to leave one!
+                  No notes yet. Add one?
                 </p>
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem", marginBottom: "0.5rem" }}>
