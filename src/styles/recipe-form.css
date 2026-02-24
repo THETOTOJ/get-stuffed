@@ -1,0 +1,146 @@
+/* =====================================================
+   recipe-form.css — New/Edit recipe form styles
+   ===================================================== */
+
+@import './forms.css';
+
+/* ── IMAGE UPLOADER AREA ── */
+.recipe-upload-area {
+  background: var(--background);
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  overflow-x: auto;
+}
+
+/* ── CHECKLIST DROPDOWN ── */
+.checklist-wrapper {
+  position: relative;
+}
+
+.checklist-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--background);
+  color: var(--foreground);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: inset 0 2px 4px var(--shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  /* Override globals.css button styles */
+  transform: none !important;
+  text-align: left;
+}
+
+.checklist-trigger:hover {
+  border-color: var(--accent);
+  box-shadow: inset 0 2px 4px var(--shadow), 0 0 0 3px var(--accent-light);
+  transform: none !important;
+}
+
+.checklist-trigger-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checklist-badge {
+  background: var(--accent);
+  color: var(--button-text);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: 20px;
+  line-height: 1.4;
+}
+
+/* Selected chips shown below trigger when closed */
+.checklist-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.checklist-chip {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--border-light);
+  font-family: var(--hand-font, 'Caveat', cursive);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.15rem 0.6rem;
+  border-radius: 20px;
+}
+
+/* Dropdown panel */
+.checklist-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 0 var(--border-light), 0 8px 24px var(--shadow);
+  z-index: 20;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 0.4rem;
+}
+
+.checklist-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  user-select: none;
+}
+
+.checklist-option:hover {
+  background: var(--accent-light);
+}
+
+.checklist-option-name {
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+
+/* Custom checkbox */
+.checklist-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  background: var(--background);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.checklist-checkbox--checked {
+  background: var(--accent);
+  border-color: var(--accent-hover);
+  color: var(--button-text);
+}
+
+.checklist-empty {
+  font-family: var(--hand-font, 'Caveat', cursive);
+  font-size: 0.95rem;
+  color: var(--muted);
+  padding: 0.5rem 0.65rem;
+}

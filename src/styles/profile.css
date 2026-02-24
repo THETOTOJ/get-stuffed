@@ -1,0 +1,95 @@
+/* =====================================================
+   profile.css — Profile page specific styles
+   ===================================================== */
+
+@import './forms.css';
+
+/* ── AVATAR SECTION ── */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.75rem 2rem 1.5rem;
+}
+
+.avatar-ring {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-light), 0 4px 16px var(--shadow);
+  cursor: pointer;
+  overflow: hidden;
+  background: var(--accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--header-font, 'Playfair Display', Georgia, serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  transition: box-shadow 0.2s ease;
+}
+
+.avatar-ring:hover {
+  box-shadow: 0 0 0 6px var(--accent-light), 0 6px 20px var(--shadow);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.avatar-ring:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.avatar-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.avatar-remove-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0.2rem 0.5rem;
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 0.82rem;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.15s ease;
+  transform: none !important;
+}
+
+.avatar-remove-btn:hover {
+  color: #b03020;
+  box-shadow: none;
+  transform: none !important;
+}
+
+@media (max-width: 600px) {
+  .avatar-section {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+}
