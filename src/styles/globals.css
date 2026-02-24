@@ -910,3 +910,69 @@ p, span, li, td, th {
 .animate-slide-up {
   animation: slide-up 0.3s ease-out;
 }
+
+/* ============================================================
+   Loading Spinner — add to globals.css (or @import this file)
+   All colors use theme tokens so it works across all 10 themes.
+   ============================================================ */
+
+/* Container */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2.5rem 1rem;
+}
+
+/* Message label */
+.loading-spinner__message {
+  color: var(--muted);
+  font-family: var(--hand-font, 'Caveat', cursive);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+.loading-spinner__message--sm {
+  font-size: 0.9rem;
+}
+
+/* ── Stirring animation ──────────────────────────────────────
+   Two nested groups on the spoon handle create an oval wave:
+   - .spinner-stir-outer  moves LEFT ↔ RIGHT (slow, 1.8s)
+     and tilts the handle slightly as it sweeps
+   - .spinner-stir-inner  moves UP ↔ DOWN (fast, 0.9s = half period)
+   Combined result: the tip traces a smooth oval, like stirring.
+   transform-origin is set inline to (40px 52px) — the spoon tip.
+   ──────────────────────────────────────────────────────────── */
+
+@keyframes spinner-stir-x {
+  0%   { transform: translateX( 9px) rotate(-12deg); }
+  50%  { transform: translateX(-9px) rotate( 12deg); }
+  100% { transform: translateX( 9px) rotate(-12deg); }
+}
+
+@keyframes spinner-stir-y {
+  0%   { transform: translateY(0px); }
+  25%  { transform: translateY(3px); }
+  50%  { transform: translateY(0px); }
+  75%  { transform: translateY(3px); }
+  100% { transform: translateY(0px); }
+}
+
+.spinner-stir-outer {
+  animation: spinner-stir-x 1.8s ease-in-out infinite;
+}
+
+.spinner-stir-inner {
+  animation: spinner-stir-y 0.9s ease-in-out infinite;
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .spinner-stir-outer,
+  .spinner-stir-inner {
+    animation: none;
+  }
+}

@@ -37,7 +37,12 @@ export default function CollectionsPage() {
 
   return (
     <>
-      <Head><title>My Collections | Get Stuffed !</title></Head>
+      <Head>
+        <title>My Collections | Get Stuffed !</title>
+        <meta property="og:title" content="My Collections | Get Stuffed !" />
+        <meta property="og:description" content="Organise your favourite recipes into collections." />
+        <meta property="og:type" content="website" />
+      </Head>
 
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "2rem 1rem 4rem" }}>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "1.75rem", flexWrap: "wrap", gap: "1rem" }}>

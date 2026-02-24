@@ -18,21 +18,21 @@
   border: 1px solid var(--border);
   border-radius: 4px 12px 12px 4px;
   box-shadow:
-    -4px 0 0 var(--border),         /* left binding edge */
+    -4px 0 0 var(--border),
+    /* left binding edge */
     0 4px 0 var(--border-light),
     0 8px 32px var(--shadow),
-    4px 4px 0 rgba(0,0,0,0.06);    /* slight drop */
+    4px 4px 0 rgba(0, 0, 0, 0.06);
+  /* slight drop */
   position: relative;
   overflow: hidden;
   /* Ruled lines via repeating gradient */
   background-image:
-    repeating-linear-gradient(
-      to bottom,
+    repeating-linear-gradient(to bottom,
       transparent 0px,
       transparent 31px,
       color-mix(in srgb, var(--accent) 12%, transparent) 31px,
-      color-mix(in srgb, var(--accent) 12%, transparent) 32px
-    );
+      color-mix(in srgb, var(--accent) 12%, transparent) 32px);
   background-size: 100% 32px;
   background-attachment: local;
 }
@@ -41,7 +41,8 @@
 .notebook-paper::before {
   content: '';
   position: absolute;
-  top: 0; bottom: 0;
+  top: 0;
+  bottom: 0;
   left: 68px;
   width: 2px;
   background: color-mix(in srgb, var(--accent) 30%, transparent);
@@ -52,7 +53,9 @@
 .notebook-paper::after {
   content: '';
   position: absolute;
-  top: 0; bottom: 0; left: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
   width: 44px;
   background:
     radial-gradient(circle 8px at 22px 48px, var(--background) 7px, transparent 8px),
@@ -74,7 +77,8 @@
 .notebook-content {
   position: relative;
   z-index: 2;
-  padding: 2rem 2.25rem 2.5rem 90px; /* 90px left = past the rings + margin */
+  padding: 2rem 2.25rem 2.5rem 90px;
+  /* 90px left = past the rings + margin */
 }
 
 /* ── NOTEBOOK TITLE ── */
@@ -114,7 +118,8 @@
 .notebook-text {
   font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
   font-size: 1.05rem;
-  line-height: 2;           /* aligns to the 32px ruled grid */
+  line-height: 2;
+  /* aligns to the 32px ruled grid */
   color: var(--foreground);
   white-space: pre-wrap;
   margin: 0;
@@ -126,6 +131,7 @@
   padding: 0;
   margin: 0;
 }
+
 .notebook-ingredient-list li {
   font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
   font-size: 1.02rem;
@@ -135,6 +141,7 @@
   align-items: baseline;
   gap: 0.5rem;
 }
+
 .notebook-ingredient-list li::before {
   content: '—';
   color: var(--accent);
@@ -151,6 +158,7 @@
   margin-bottom: 0.25rem;
   align-items: baseline;
 }
+
 .notebook-step-num {
   font-family: var(--hand-font, 'Caveat', cursive);
   font-size: 1.1rem;
@@ -159,6 +167,7 @@
   line-height: 2;
   text-align: right;
 }
+
 .notebook-step-text {
   font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
   font-size: 1.02rem;
@@ -244,9 +253,20 @@
   margin: 0.25rem;
   transition: transform 0.2s ease;
 }
-.notebook-photo:nth-child(even) { transform: rotate(0.7deg); }
-.notebook-photo:hover { transform: rotate(0deg) scale(1.02); z-index: 5; }
-.notebook-photo img { display: block; }
+
+.notebook-photo:nth-child(even) {
+  transform: rotate(0.7deg);
+}
+
+.notebook-photo:hover {
+  transform: rotate(0deg) scale(1.02);
+  z-index: 5;
+}
+
+.notebook-photo img {
+  display: block;
+}
+
 .notebook-photo-caption {
   font-family: var(--hand-font, 'Caveat', cursive);
   font-size: 0.85rem;
@@ -262,6 +282,178 @@
   gap: 0.65rem;
   flex-wrap: wrap;
   margin-bottom: 1.5rem;
+}
+
+/* ── GALLERY: zoom hint overlay ── */
+.gallery-zoom-hint {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.notebook-photo:hover .gallery-zoom-hint {
+  opacity: 1;
+}
+
+/* ── GALLERY: +N remaining overlay ── */
+.gallery-more-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.gallery-more-count {
+  font-family: var(--header-font, 'Playfair Display', Georgia, serif);
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #fff;
+  line-height: 1;
+}
+
+.gallery-more-label {
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── GALLERY: Lightbox modal ── */
+.gallery-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.gallery-modal-inner {
+  position: relative;
+  max-width: 56rem;
+  width: 100%;
+  height: 100%;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.gallery-modal-close:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.gallery-modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.gallery-modal-nav:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.gallery-modal-nav--left {
+  left: 0.5rem;
+}
+
+.gallery-modal-nav--right {
+  right: 0.5rem;
+}
+
+.gallery-modal-counter {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 0.88rem;
+}
+
+.gallery-modal-thumbs {
+  position: absolute;
+  bottom: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.25rem 0.5rem;
+}
+
+.gallery-thumb {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  opacity: 0.5;
+  cursor: pointer;
+  position: relative;
+  transition: opacity 0.15s, border-color 0.15s;
+  padding: 0;
+  background: none;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.85;
+}
+
+.gallery-thumb--active {
+  border-color: #fff;
+  opacity: 1;
 }
 
 /* ── RESPONSIVE ── */
@@ -287,5 +479,7 @@
     background-color: color-mix(in srgb, var(--background) 90%, var(--border));
   }
 
-  .notebook-title { font-size: 1.65rem; }
+  .notebook-title {
+    font-size: 1.65rem;
+  }
 }

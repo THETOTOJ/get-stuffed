@@ -9,6 +9,7 @@ import Image from "next/image";
 import type { Tables } from "@/types/database.types";
 import Head from "next/head";
 import { Clock, Tag, Zap, ArrowLeft, Edit2, Check, X, Trash2 } from "lucide-react";
+import FormattedText from "@/components/FormattedText";
 
 type RecipeImage = { id: string; image_url: string; sort_order: number };
 type RecipeTag = { tags: { id: string; name: string } };
@@ -233,10 +234,23 @@ export default function RecipePage() {
   const ingredientLines = parseIngredients(recipe.ingredients || "");
   const instructionSteps = parseInstructions(recipe.instructions || "");
 
+  const ogTitle = recipe.title || "Recipe";
+  const ogDescription = recipe.ingredients
+    ? `Ingredients: ${recipe.ingredients.split("\n").slice(0, 3).join(", ")}...`
+    : "A delicious recipe on Get Stuffed!";
+  const ogImage = previews.length > 0 ? previews[0] : "/preview.gif";
+
   return (
     <>
       <Head>
-        <title>{recipe.title ? `${recipe.title} | Get Stuffed !` : "Recipe | Get Stuffed !"}</title>
+        <title>{`${ogTitle} | Get Stuffed !`}</title>
+        <meta property="og:title" content={`${ogTitle} | Get Stuffed !`} />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:type" content="article" />
+        {ogImage && <meta property="og:image" content={ogImage} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${ogTitle} | Get Stuffed !`} />
+        <meta name="twitter:description" content={ogDescription} />
       </Head>
 
       <div className="notebook-page">
@@ -333,14 +347,7 @@ export default function RecipePage() {
                 <>
                   <p className="notebook-heading">📷 Photos</p>
                   <div style={{ marginBottom: "1.5rem" }}>
-                    {previews.length === 1 ? (
-                      <div className="notebook-photo" style={{ maxWidth: "340px" }}>
-                        <Image src={previews[0]} alt={recipe.title} width={320} height={220} style={{ width: "100%", height: "auto", objectFit: "cover" }} quality={90} />
-                        <p className="notebook-photo-caption">{recipe.title}</p>
-                      </div>
-                    ) : (
-                      <RecipeImageGallery images={previews} />
-                    )}
+                    <RecipeImageGallery images={previews} title={recipe.title} />
                   </div>
                   <hr className="notebook-divider" />
                 </>
@@ -352,7 +359,7 @@ export default function RecipePage() {
                   <p className="notebook-heading">🧺 Ingredients</p>
                   <ul className="notebook-ingredient-list" style={{ marginBottom: "1.5rem" }}>
                     {ingredientLines.map((line, i) => (
-                      <li key={i}>{line}</li>
+                      <li key={i}><FormattedText text={line} style={{ display: "inline" }} /></li>
                     ))}
                   </ul>
                   <hr className="notebook-divider" />
@@ -367,7 +374,7 @@ export default function RecipePage() {
                     {instructionSteps.map((step, i) => (
                       <div key={i} className="notebook-step">
                         <span className="notebook-step-num">{i + 1}.</span>
-                        <span className="notebook-step-text">{step}</span>
+                        <span className="notebook-step-text"><FormattedText text={step} style={{ display: "inline" }} /></span>
                       </div>
                     ))}
                   </div>
@@ -460,13 +467,14 @@ export default function RecipePage() {
                               )}
                             </div>
                           </div>
-                          <p style={{
-                            fontFamily: "var(--body-font, 'Crimson Pro', Georgia, serif)",
-                            fontSize: "0.98rem", lineHeight: 1.7,
-                            color: "var(--foreground)", whiteSpace: "pre-wrap", margin: 0,
-                          }}>
-                            {comment.body}
-                          </p>
+                          <FormattedText
+                            text={comment.body}
+                            style={{
+                              fontFamily: "var(--body-font, 'Crimson Pro', Georgia, serif)",
+                              fontSize: "0.98rem", lineHeight: 1.7,
+                              color: "var(--foreground)", margin: 0,
+                            }}
+                          />
                         </div>
                       </div>
                     </div>

@@ -13,7 +13,6 @@ type RecipePreview = {
   title: string;
   cook_time_mins: number | null;
   firstImageUrl: string | null;
-  imageLoaded: boolean;
   recipe_tags?: { tag_id: string }[];
   recipe_efforts?: { effort_id: string }[];
 };
@@ -94,7 +93,7 @@ export default function RecipesIndexPage() {
         return {
           id: recipe.id, title: recipe.title,
           cook_time_mins: recipe.cook_time_mins,
-          firstImageUrl: imageUrl, imageLoaded: false,
+          firstImageUrl: imageUrl,
           recipe_tags: recipe.recipe_tags || [],
           recipe_efforts: recipe.recipe_efforts || [],
         };
@@ -130,7 +129,13 @@ export default function RecipesIndexPage() {
 
   return (
     <>
-      <Head><title>Get Stuffed ! | Recipe Collection</title></Head>
+      <Head>
+        <title>Recipes | Get Stuffed !</title>
+        <meta property="og:title" content="Recipes | Get Stuffed !" />
+        <meta property="og:description" content="Browse our community recipe collection - homemade dishes shared with love." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/preview.gif" />
+      </Head>
 
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "2rem 1rem 4rem" }}
         onClick={() => { setTagsOpen(false); setEffortsOpen(false); }}
