@@ -66,14 +66,18 @@ function Checklist({
             <p className="checklist-empty">No options available</p>
           ) : (
             options.map((opt) => (
-              <label key={opt.id} className="checklist-option">
+              <div
+                key={opt.id}
+                className="checklist-option"
+                onClick={() => toggle(opt.id)}
+              >
                 <span
                   className={`checklist-checkbox ${selected.includes(opt.id) ? "checklist-checkbox--checked" : ""}`}
                 >
                   {selected.includes(opt.id) && <Check size={11} strokeWidth={3} />}
                 </span>
                 <span className="checklist-option-name">{opt.name}</span>
-              </label>
+              </div>
             ))
           )}
         </div>
@@ -204,22 +208,59 @@ export default function NewRecipe() {
               />
             </div>
 
-            <div className="form-field">
-              <label className="form-label">Cook Time</label>
-              <div className="form-input-wrapper">
-                <span className="form-input-icon">
-                  <Clock size={16} />
-                </span>
-                <input
-                  value={cook_time_mins}
-                  type="number"
-                  onChange={(e) => setCookTime(e.target.value)}
-                  placeholder="Minutes"
-                  className="form-input form-input--icon"
-                  style={{ appearance: "textfield" }}
-                />
-              </div>
-            </div>
+<div className="form-field">
+  <label className="form-label">Cook Time</label>
+  <div className="form-input-wrapper">
+    <span className="form-input-icon">
+      <Clock size={16} />
+    </span>
+    <input
+      value={cook_time_mins}
+      type="number"
+      onChange={(e) => setCookTime(e.target.value)}
+      onKeyDown={(e) => {
+        // Allow: backspace, delete, tab, escape, enter, arrow keys, home, end
+        if (
+          e.key === 'Backspace' ||
+          e.key === 'Delete' ||
+          e.key === 'Tab' ||
+          e.key === 'Escape' ||
+          e.key === 'Enter' ||
+          e.key === 'Home' ||
+          e.key === 'End' ||
+          e.key === 'ArrowLeft' ||
+          e.key === 'ArrowRight'
+        ) {
+          return; // Allow these keys
+        }
+        
+        // Allow Ctrl+A (select all), Ctrl+C (copy), Ctrl+V (paste), Ctrl+X (cut)
+        if (e.ctrlKey && (e.key === 'a' || e.key === 'c' || e.key === 'v' || e.key === 'x')) {
+          return;
+        }
+        
+        // Block any key that's not a number
+        if (!/^[0-9]$/.test(e.key)) {
+          e.preventDefault();
+        }
+      }}
+      onPaste={(e) => {
+        // Get pasted data
+        const pastedText = e.clipboardData.getData('text');
+        
+        // Check if pasted text contains only numbers
+        if (!/^\d+$/.test(pastedText)) {
+          e.preventDefault();
+        }
+      }}
+      placeholder="Minutes"
+      className="form-input form-input--icon"
+      style={{ appearance: "textfield" }}
+      min="0" // Optional: prevents negative numbers via arrows
+      step="1" // Optional: ensures whole numbers
+    />
+  </div>
+</div>
           </div>
 
           <div className="form-divider" />

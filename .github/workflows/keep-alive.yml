@@ -10,14 +10,22 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase
+      - name: Ping Supabase API
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
+          # Ping a small table or a function that returns quickly
           response=$(curl -s -o /dev/null -w "%{http_code}" -X GET \
-            "https://pjtdpwafdpknkufbpsxj.supabase.co/rest/v1/" \
-            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqdGRwd2FmZHBrbmt1ZmJwc3hqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0MjM0ODUsImV4cCI6MjA3Mjk5OTQ4NX0.P-kkoDqr7K2mqQzoLXMay-y68cRO5hWaU0sJVnAlfPk" \
+            "${SUPABASE_URL}/rest/v1/recipes?select=id&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
             -H "Content-Type: application/json")
+          
           echo "Response code: $response"
           if [ $response -ne 200 ]; then
             echo "Failed to ping Supabase"
             exit 1
+          else
+            echo "✅ Supabase is awake and responding"
           fi
