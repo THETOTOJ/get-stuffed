@@ -2,344 +2,910 @@
 @import './profile.css';
 @import './recipe-form.css';
 @import './collection-form.css';
+@import './recipe-detail.css';
 
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-/* =====================
-   Grandma's Cookbook Theming
-   Cozy, warm, readable themes
-===================== */
+/* ============================================================
+   GET STUFFED — Global Stylesheet
+   Cozy cookbook aesthetic, Stardew Valley-inspired palette
+   ============================================================ */
 
-/* Light Vanilla Cream (Default) ☀️ */
-:root {
-  --background: #fff8f0;
-  --foreground: #3d2817;
-  --card: #ffffff;
-  --card-hover: #fef5eb;
-  --accent: #e8b4a8;
-  --accent-hover: #d9a199;
-  --border: #e8d5c4;
-  --muted: #6b5d52;
-  --button-text: #3d2817;
+/* ── GOOGLE FONTS ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Caveat:wght@400;500;600;700&display=swap');
+
+/* ============================================================
+   THEME TOKENS
+   Each theme fully defines the complete variable set.
+   ============================================================ */
+
+/* ── ☀️ HARVEST CREAM (Default) ──
+   Warm parchment, like a well-loved recipe card */
+:root,
+[data-theme="light"] {
+  --background:    #fdf6e4;
+  --foreground:    #3c2a1a;
+  --card:          #fffbf0;
+  --card-hover:    #fef5dc;
+  --accent:        #c8813a;
+  --accent-hover:  #b06e2c;
+  --accent-light:  #f3debb;
+  --border:        #d4a96a;
+  --border-light:  #e8cc9a;
+  --muted:         #7a5c3a;
+  --shadow:        rgba(90, 55, 15, 0.18);
+  --button-text:   #fffbf0;
+  --tag-bg:        #ede0c4;
+  --tag-text:      #5c3d1e;
+  --ink:           #3c2a1a;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* Warm Honey 🍯 */
+/* ── 🍯 HONEYCOMB ──
+   Golden afternoon, jar of sun */
 [data-theme="honey"] {
-  --background: #fef6e8;
-  --foreground: #4a3618;
-  --card: #ffffff;
-  --card-hover: #fff9ed;
-  --accent: #f4c17a;
-  --accent-hover: #e5b268;
-  --border: #e8d5b5;
-  --muted: #6b5941;
-  --button-text: #4a3618;
+  --background:    #fef8e8;
+  --foreground:    #4a3010;
+  --card:          #fffef5;
+  --card-hover:    #fef8d0;
+  --accent:        #d4980c;
+  --accent-hover:  #b88008;
+  --accent-light:  #f5e5a0;
+  --border:        #c8a830;
+  --border-light:  #e8d870;
+  --muted:         #6b5018;
+  --shadow:        rgba(100, 70, 0, 0.18);
+  --button-text:   #fffef5;
+  --tag-bg:        #f0e4a0;
+  --tag-text:      #5c4010;
+  --ink:           #4a3010;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* Lavender Tea 🫖 */
+/* ── 🌸 SPRING FAIR ──
+   Cherry blossom festival, soft pinks */
 [data-theme="lavender"] {
-  --background: #f5f3f8;
-  --foreground: #3a2d4a;
-  --card: #ffffff;
-  --card-hover: #f0ecf5;
-  --accent: #b8a7d4;
-  --accent-hover: #a596c2;
-  --border: #d8d0e5;
-  --muted: #5d5169;
-  --button-text: #3a2d4a;
+  --background:    #fdf4f8;
+  --foreground:    #3a1a2e;
+  --card:          #fff8fc;
+  --card-hover:    #fbeef6;
+  --accent:        #c0607a;
+  --accent-hover:  #a84e68;
+  --accent-light:  #f0c8d8;
+  --border:        #d898b0;
+  --border-light:  #ecc8d8;
+  --muted:         #7a3a58;
+  --shadow:        rgba(90, 30, 60, 0.16);
+  --button-text:   #fff8fc;
+  --tag-bg:        #f0d0e0;
+  --tag-text:      #5c2040;
+  --ink:           #3a1a2e;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* Mint Cookie 🍪 */
+/* ── 🌿 FOREST WALK ──
+   Fern-shaded paths, morning dew */
 [data-theme="mint"] {
-  --background: #f2f8f5;
-  --foreground: #2d4a3a;
-  --card: #ffffff;
-  --card-hover: #ebf5f0;
-  --accent: #a8d5ba;
-  --accent-hover: #96c4a8;
-  --border: #cde5d7;
-  --muted: #516b5d;
-  --button-text: #2d4a3a;
+  --background:    #f2f8f0;
+  --foreground:    #1e3820;
+  --card:          #f8fdf6;
+  --card-hover:    #e8f5e4;
+  --accent:        #4a8c58;
+  --accent-hover:  #3a7048;
+  --accent-light:  #c0dfc0;
+  --border:        #7ab080;
+  --border-light:  #aad0b0;
+  --muted:         #3a6048;
+  --shadow:        rgba(20, 60, 30, 0.16);
+  --button-text:   #f8fdf6;
+  --tag-bg:        #c8e8c8;
+  --tag-text:      #1e4028;
+  --ink:           #1e3820;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* ==================
-   DARK THEMES
-================== */
-
-/* Chocolate Truffle 🍫 */
+/* ── 🍫 CHOCOLATE TRUFFLE ──
+   Late nights in the kitchen, rich & warm */
 [data-theme="chocolate"] {
-  --background: #2a1f1a;
-  --foreground: #e8d9c8;
-  --card: #3d2f27;
-  --card-hover: #4a3830;
-  --accent: #a67c6d;
-  --accent-hover: #b88b7a;
-  --border: #564437;
-  --muted: #b5a594;
-  --button-text: #f5ebe1;
+  --background:    #1e1208;
+  --foreground:    #f0dfc0;
+  --card:          #2c1c10;
+  --card-hover:    #3a2414;
+  --accent:        #c8823a;
+  --accent-hover:  #d89048;
+  --accent-light:  #5a3018;
+  --border:        #704020;
+  --border-light:  #4a2c10;
+  --muted:         #c09068;
+  --shadow:        rgba(0, 0, 0, 0.45);
+  --button-text:   #f8ecd8;
+  --tag-bg:        #4a2c10;
+  --tag-text:      #e8c890;
+  --ink:           #f0dfc0;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* Coffee & Cream ☕ */
+/* ── ☕ ESPRESSO ──
+   The café at dawn, strong and quiet */
 [data-theme="coffee"] {
-  --background: #1f1612;
-  --foreground: #e5ddd5;
-  --card: #2d2319;
-  --card-hover: #362a1f;
-  --accent: #8d6e5b;
-  --accent-hover: #9f7d68;
-  --border: #4a3a2d;
-  --muted: #b8a899;
-  --button-text: #f0e8e0;
+  --background:    #160f08;
+  --foreground:    #e8d8c0;
+  --card:          #221508;
+  --card-hover:    #2e1c0c;
+  --accent:        #a86c3a;
+  --accent-hover:  #c07848;
+  --accent-light:  #4a2c10;
+  --border:        #5a3818;
+  --border-light:  #3a2410;
+  --muted:         #b08060;
+  --shadow:        rgba(0, 0, 0, 0.55);
+  --button-text:   #f5e8d8;
+  --tag-bg:        #3a2414;
+  --tag-text:      #d8b880;
+  --ink:           #e8d8c0;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* Midnight Plum 🌙 */
+/* ── 🌙 MIDNIGHT PLUM ──
+   Stardew moonlit nights, magic & mystery */
 [data-theme="plum"] {
-  --background: #1f1626;
-  --foreground: #e5d9e8;
-  --card: #2d2235;
-  --card-hover: #362a3f;
-  --accent: #8d6b9f;
-  --accent-hover: #9f7bb0;
-  --border: #453654;
-  --muted: #b8a5c4;
-  --button-text: #f0e5f5;
+  --background:    #120c1e;
+  --foreground:    #e8d8f5;
+  --card:          #1e1430;
+  --card-hover:    #281a3c;
+  --accent:        #9060c8;
+  --accent-hover:  #a870d8;
+  --accent-light:  #3a1860;
+  --border:        #5c3890;
+  --border-light:  #3c2060;
+  --muted:         #c0a0e0;
+  --shadow:        rgba(0, 0, 0, 0.5);
+  --button-text:   #f0e4ff;
+  --tag-bg:        #2e1848;
+  --tag-text:      #d0a8f0;
+  --ink:           #e8d8f5;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* Forest Night 🌲 */
+/* ── 🌲 THYME ──
+   Pine forest evenings, earthy & still */
 [data-theme="forest"] {
-  --background: #1a2620;
-  --foreground: #d9e8e0;
-  --card: #263530;
-  --card-hover: #2f3f38;
-  --accent: #6b9f8d;
-  --accent-hover: #7bb09d;
-  --border: #3d4f47;
-  --muted: #a5c4b8;
-  --button-text: #e5f5ed;
+  --background:    #0c1a10;
+  --foreground:    #d8f0d8;
+  --card:          #142018;
+  --card-hover:    #1c2c20;
+  --accent:        #4a9858;
+  --accent-hover:  #5aaa68;
+  --accent-light:  #183820;
+  --border:        #3a6040;
+  --border-light:  #244030;
+  --muted:         #90c898;
+  --shadow:        rgba(0, 0, 0, 0.5);
+  --button-text:   #f0fff0;
+  --tag-bg:        #182c1c;
+  --tag-text:      #a0d8a8;
+  --ink:           #d8f0d8;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* Berry Jam 🫐 */
+/* ── 🫐 BERRY JAM ──
+   Wild blueberries, summer evenings */
 [data-theme="berry"] {
-  --background: #1f1a26;
-  --foreground: #e5dde8;
-  --card: #2d2535;
-  --card-hover: #362e3f;
-  --accent: #8d6b9f;
-  --accent-hover: #9f7bb0;
-  --border: #453654;
-  --muted: #b8a5c4;
-  --button-text: #f0e5f5;
+  --background:    #120e1e;
+  --foreground:    #e8d8f8;
+  --card:          #1c1430;
+  --card-hover:    #261a3c;
+  --accent:        #7850b8;
+  --accent-hover:  #9060cc;
+  --accent-light:  #301850;
+  --border:        #503880;
+  --border-light:  #342058;
+  --muted:         #b898e0;
+  --shadow:        rgba(0, 0, 0, 0.5);
+  --button-text:   #f0e8ff;
+  --tag-bg:        #281848;
+  --tag-text:      #c8a0f0;
+  --ink:           #e8d8f8;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* Warm Cocoa 🥛 */
+/* ── 🥛 BROWNIE ──
+   Warm kitchen, fudge & walnuts */
 [data-theme="cocoa"] {
-  --background: #261f1d;
-  --foreground: #e8ddd9;
-  --card: #352d2a;
-  --card-hover: #3f3633;
-  --accent: #9f8d7b;
-  --accent-hover: #b09d8b;
-  --border: #4f4541;
-  --muted: #c4b8ad;
-  --button-text: #f5ede8;
+  --background:    #1c1410;
+  --foreground:    #f0e4d8;
+  --card:          #2a1e18;
+  --card-hover:    #362820;
+  --accent:        #b87848;
+  --accent-hover:  #c88858;
+  --accent-light:  #502c18;
+  --border:        #6a4028;
+  --border-light:  #4a2c18;
+  --muted:         #c8a888;
+  --shadow:        rgba(0, 0, 0, 0.5);
+  --button-text:   #fef5ec;
+  --tag-bg:        #3a2418;
+  --tag-text:      #e8c8a0;
+  --ink:           #f0e4d8;
+  --hand-font:     'Caveat', cursive;
+  --header-font:   'Playfair Display', Georgia, serif;
+  --body-font:     'Crimson Pro', Georgia, serif;
 }
 
-/* ==================
-   BASE STYLES
-================== */
+
+/* ============================================================
+   BASE TYPOGRAPHY & BODY
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
   transition: background 0.3s ease, color 0.3s ease;
-  line-height: 1.6;
+  /* Subtle paper texture */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
-/* Card styles - affects recipe cards and other cards */
-.recipe-card,
-[class*="bg-white"],
-.card {
-  background: var(--card) !important;
-  color: var(--foreground) !important;
-  border-color: var(--border) !important;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--header-font, 'Playfair Display', Georgia, serif);
+  color: var(--foreground);
+  line-height: 1.3;
 }
 
-.recipe-card:hover,
-[class*="hover:shadow"] {
-  background: var(--card-hover) !important;
-}
-
-/* Button styles */
-button:not(.theme-button):not(.modal-close),
-.btn,
-[class*="bg-rose"],
-[class*="bg-green"],
-[class*="bg-blue"],
-[class*="bg-yellow"],
-[class*="bg-red"],
-[class*="bg-gray"]:not([class*="bg-gray-50"]):not([class*="bg-gray-100"]):not([class*="bg-gray-200"]) {
-  background: var(--accent) !important;
-  color: var(--button-text) !important;
-  border: 1px solid var(--border);
-  transition: all 0.2s ease;
-}
-
-button:hover:not(.theme-button):not(.modal-close),
-.btn:hover {
-  background: var(--accent-hover) !important;
-  transform: translateY(-1px);
-}
-
-/* Input fields */
-input,
-textarea,
-select {
-  background: var(--card) !important;
-  color: var(--foreground) !important;
-  border-color: var(--border) !important;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--muted) !important;
-  opacity: 0.6;
-}
-
-/* Links */
 a {
   color: var(--foreground);
   transition: opacity 0.2s ease;
+  text-decoration: none;
 }
+a:hover { opacity: 0.75; }
 
-a:hover {
-  opacity: 0.8;
-}
-
-/* Navbar */
-nav {
-  background: var(--card) !important;
-  border-bottom: 2px solid var(--border);
-}
-
-/* Muted text */
-.text-gray-500,
-.text-gray-600 {
-  color: var(--muted) !important;
-}
-
-/* Tags and badges */
-.bg-green-100,
-.bg-yellow-100,
-.bg-blue-100 {
-  background: var(--accent) !important;
-  color: var(--button-text) !important;
-  opacity: 0.9;
-}
-
-/* Recipe image overlay fix */
-.recipe-card img {
-  background: var(--card);
-}
-
-/* Modal backgrounds */
-.fixed.inset-0 > div {
-  background: var(--card) !important;
-  color: var(--foreground) !important;
-}
-
-/* Dropdown menus */
-[class*="absolute"][class*="shadow"] {
-  background: var(--card) !important;
-  color: var(--foreground) !important;
-  border-color: var(--border) !important;
-}
-
-/* Special backgrounds */
-.bg-rose-50,
-.bg-amber-50,
-.bg-gray-50 {
-  background: var(--card) !important;
-}
-
-.bg-gray-100,
-.bg-gray-200 {
-  background: var(--background) !important;
-}
-
-/* Error and success messages */
-.bg-red-100 {
-  background: rgba(220, 38, 38, 0.1) !important;
-  border-color: rgba(220, 38, 38, 0.3) !important;
-}
-
-.bg-green-100 {
-  background: rgba(34, 197, 94, 0.1) !important;
-  border-color: rgba(34, 197, 94, 0.3) !important;
-}
-
-.text-red-700 {
-  color: #dc2626 !important;
-}
-
-.text-green-700 {
-  color: #16a34a !important;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-hover);
-}
-
-/* Theme-aware text colors */
-h1, h2, h3, h4, h5, h6 {
-  color: var(--foreground);
-}
-
-.text-grandma-brown,
-.text-rose-800,
-.text-amber-800 {
-  color: var(--foreground) !important;
-}
-
-/* Ensure readability on all backgrounds */
 p, span, li, td, th {
   color: var(--foreground);
 }
 
-/* Focus states */
-input:focus,
-textarea:focus,
-button:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }
+
+
+/* ============================================================
+   RECIPE CARDS  (recipes/index.tsx)
+   ============================================================ */
+.recipe-card {
+  background: var(--card);
+  border: 1.5px solid var(--border-light);
+  border-radius: 14px;
+  box-shadow: 0 3px 0 var(--border-light), 0 6px 20px var(--shadow);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--foreground);
+  text-decoration: none;
+  display: block;
+  position: relative;
 }
+
+.recipe-card:hover {
+  transform: translateY(-3px) rotate(0.4deg);
+  box-shadow: 0 6px 0 var(--border-light), 0 12px 32px var(--shadow);
+  opacity: 1;
+}
+
+.recipe-card-img {
+  width: 100%;
+  height: 168px;
+  object-fit: cover;
+  display: block;
+  background: var(--accent-light);
+}
+
+.recipe-card-body {
+  padding: 0.9rem 1rem 1rem;
+}
+
+.recipe-card-title {
+  font-family: var(--header-font);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--foreground);
+  line-height: 1.3;
+  margin: 0 0 0.3rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.recipe-card-meta {
+  font-family: var(--body-font);
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.recipe-card-placeholder {
+  width: 100%;
+  height: 168px;
+  background: var(--accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+/* ── Heart button on card ── */
+.recipe-heart-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1.5px solid var(--border-light);
+  box-shadow: 0 2px 6px var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  color: var(--muted);
+  padding: 0;
+}
+.recipe-heart-btn:hover {
+  transform: scale(1.15);
+  background: var(--accent-light);
+  border-color: var(--accent);
+}
+.recipe-heart-btn.is-fav {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-light);
+  animation: heartPop 0.35s cubic-bezier(0.17, 0.89, 0.32, 1.49) both;
+}
+@keyframes heartPop {
+  0%   { transform: scale(0.8); }
+  60%  { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+
+/* ============================================================
+   TAGS & BADGES
+   ============================================================ */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--border-light);
+  font-family: var(--body-font);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
+.tag-pill--accent {
+  background: var(--accent);
+  color: var(--button-text);
+  border-color: var(--accent-hover);
+}
+
+
+/* ============================================================
+   FILTER CHIPS  (recipes/index.tsx)
+   ============================================================ */
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1.5px solid var(--border-light);
+  border-radius: 20px;
+  padding: 0.35rem 0.9rem;
+  font-family: var(--body-font);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 0 var(--border-light);
+  transition: all 0.15s ease;
+}
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent);
+  color: var(--button-text);
+  border-color: var(--accent-hover);
+  box-shadow: 0 2px 0 var(--accent-hover);
+  transform: translateY(-1px);
+}
+.filter-btn.active { transform: none; box-shadow: none; }
+
+.filter-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--body-font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 0 var(--border-light), 0 2px 8px var(--shadow);
+  transition: all 0.15s ease;
+}
+.filter-dropdown-btn:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 0 var(--accent-light), 0 0 0 3px var(--accent-light);
+}
+
+.filter-dropdown-panel {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 4px 0 var(--border-light), 0 8px 24px var(--shadow);
+  padding: 0.5rem;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+  user-select: none;
+  font-family: var(--body-font);
+  font-size: 0.92rem;
+  color: var(--foreground);
+}
+.filter-option:hover { background: var(--accent-light); }
+
+/* ============================================================
+   GENERAL SITE BUTTONS  (not forms)
+   ============================================================ */
+
+/* Primary action button — used outside forms */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: var(--button-text);
+  border: 1.5px solid var(--accent-hover);
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--body-font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--accent-hover);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  text-decoration: none;
+}
+.btn-primary:hover {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--accent-hover);
+  opacity: 1;
+  color: var(--button-text);
+}
+.btn-primary:active { transform: translateY(3px); box-shadow: none; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.55rem 1.1rem;
+  font-family: var(--body-font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  text-decoration: none;
+}
+.btn-secondary:hover {
+  background: var(--accent);
+  color: var(--button-text);
+  opacity: 1;
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: #b03020;
+  border: 1.5px solid #d04030;
+  border-radius: 8px;
+  padding: 0.55rem 1.1rem;
+  font-family: var(--body-font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.btn-danger:hover {
+  background: #b03020;
+  color: white;
+}
+
+.btn-muted {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--card);
+  color: var(--muted);
+  border: 1.5px solid var(--border-light);
+  border-radius: 8px;
+  padding: 0.55rem 1rem;
+  font-family: var(--body-font);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn-muted:hover { background: var(--card-hover); }
+
+
+/* ============================================================
+   RECIPE DETAIL PAGE  (recipes/[id].tsx)
+   ============================================================ */
+.recipe-detail-wrapper {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.recipe-detail-title {
+  font-family: var(--header-font);
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--foreground);
+  margin: 0 0 0.4rem;
+  line-height: 1.2;
+}
+
+.recipe-section-card {
+  background: var(--card);
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 0 var(--border-light), 0 4px 16px var(--shadow);
+  position: relative;
+}
+
+.recipe-section-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(90deg, var(--accent), var(--border));
+  opacity: 0.6;
+}
+
+.recipe-section-title {
+  font-family: var(--header-font);
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--foreground);
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.recipe-content {
+  font-family: var(--body-font);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--foreground);
+  white-space: pre-wrap;
+}
+
+
+/* ============================================================
+   COMMENTS
+   ============================================================ */
+.comment-card {
+  background: var(--card);
+  border: 1.5px solid var(--border-light);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.comment-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  border: 2px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--header-font);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.comment-input {
+  width: 100%;
+  background: var(--background);
+  color: var(--foreground);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-family: var(--body-font);
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-shadow: inset 0 2px 4px var(--shadow);
+}
+.comment-input:focus {
+  border-color: var(--accent);
+  box-shadow: inset 0 2px 4px var(--shadow), 0 0 0 3px var(--accent-light);
+}
+
+
+/* ============================================================
+   COLLECTIONS
+   ============================================================ */
+.collection-card {
+  background: var(--card);
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 3px 0 var(--border-light), 0 6px 16px var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+  text-decoration: none;
+  color: var(--foreground);
+  position: relative;
+  overflow: hidden;
+}
+
+.collection-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--border-light), var(--accent));
+  border-radius: 12px 12px 0 0;
+}
+
+.collection-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 var(--border-light), 0 10px 24px var(--shadow);
+  opacity: 1;
+}
+
+.collection-title {
+  font-family: var(--header-font);
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--foreground);
+  margin: 0 0 0.4rem;
+}
+
+.collection-meta {
+  font-family: var(--body-font);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.collection-empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted);
+}
+
+.collection-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
+}
+
+.collection-empty-title {
+  font-family: var(--header-font);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.collection-empty-hint {
+  font-family: var(--hand-font);
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+
+/* ============================================================
+   PAGE HEADERS  (section headings)
+   ============================================================ */
+.page-heading {
+  font-family: var(--header-font);
+  font-style: italic;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--foreground);
+  position: relative;
+  display: inline-block;
+}
+
+.page-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 2px;
+}
+
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 4px 0 var(--border-light), 0 16px 48px rgba(0,0,0,0.4);
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  overflow: hidden;
+  animation: formCardIn 0.3s ease both;
+}
+
+.modal-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--border), var(--accent));
+}
+
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-family: var(--header-font);
+  font-style: italic;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  display: flex;
+  transition: color 0.15s;
+}
+.modal-close:hover { color: var(--foreground); }
+
+.modal-body {
+  padding: 1.25rem 1.5rem;
+}
+
+.modal-footer {
+  padding: 0 1.5rem 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+.spinner {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+/* ============================================================
+   MUTED TEXT UTILITY
+   ============================================================ */
+.text-muted {
+  color: var(--muted) !important;
+}
+
+.text-accent {
+  color: var(--accent) !important;
+}
+
+
+/* ============================================================
+   INSTALL PROMPT ANIMATION
+   ============================================================ */
 @keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
 .animate-slide-up {

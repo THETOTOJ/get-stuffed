@@ -1,0 +1,291 @@
+/* =====================================================
+   recipe-detail.css — Notebook / journal aesthetic
+   for the recipe detail page (recipes/[id].tsx)
+   ===================================================== */
+
+/* ── NOTEBOOK PAGE WRAPPER ── */
+.notebook-page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1rem 5rem;
+}
+
+/* ── NOTEBOOK PAPER ──
+   Cream card with ruled lines in the background,
+   a red margin line on the left, and ring-hole dots */
+.notebook-paper {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px 12px 12px 4px;
+  box-shadow:
+    -4px 0 0 var(--border),         /* left binding edge */
+    0 4px 0 var(--border-light),
+    0 8px 32px var(--shadow),
+    4px 4px 0 rgba(0,0,0,0.06);    /* slight drop */
+  position: relative;
+  overflow: hidden;
+  /* Ruled lines via repeating gradient */
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 31px,
+      color-mix(in srgb, var(--accent) 12%, transparent) 31px,
+      color-mix(in srgb, var(--accent) 12%, transparent) 32px
+    );
+  background-size: 100% 32px;
+  background-attachment: local;
+}
+
+/* Red margin line */
+.notebook-paper::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 68px;
+  width: 2px;
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  z-index: 0;
+}
+
+/* Ring holes down the left edge */
+.notebook-paper::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 44px;
+  background:
+    radial-gradient(circle 8px at 22px 48px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 136px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 224px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 312px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 400px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 488px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 576px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 664px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 752px, var(--background) 7px, transparent 8px),
+    radial-gradient(circle 8px at 22px 840px, var(--background) 7px, transparent 8px);
+  background-color: color-mix(in srgb, var(--background) 90%, var(--border));
+  border-right: 1.5px solid var(--border-light);
+  z-index: 1;
+}
+
+/* Content sits above the pseudo-elements */
+.notebook-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem 2.25rem 2.5rem 90px; /* 90px left = past the rings + margin */
+}
+
+/* ── NOTEBOOK TITLE ── */
+.notebook-title {
+  font-family: var(--header-font, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 2.1rem;
+  color: var(--foreground);
+  line-height: 1.25;
+  margin: 0 0 0.2rem;
+  /* Sits on the first ruled line */
+  padding-top: 0.15rem;
+}
+
+.notebook-author {
+  font-family: var(--hand-font, 'Caveat', cursive);
+  font-size: 1.05rem;
+  color: var(--muted);
+  margin: 0 0 1.5rem;
+}
+
+/* ── SECTION HEADINGS ──
+   Look like underlined handwritten headings */
+.notebook-heading {
+  font-family: var(--hand-font, 'Caveat', cursive);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  display: inline-block;
+}
+
+/* ── NOTEBOOK TEXT ── */
+.notebook-text {
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 1.05rem;
+  line-height: 2;           /* aligns to the 32px ruled grid */
+  color: var(--foreground);
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+/* Ingredients list — each item sits on its own ruled line */
+.notebook-ingredient-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.notebook-ingredient-list li {
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 1.02rem;
+  line-height: 2;
+  color: var(--foreground);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.notebook-ingredient-list li::before {
+  content: '—';
+  color: var(--accent);
+  font-family: var(--hand-font, 'Caveat', cursive);
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* Instruction steps */
+.notebook-step {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0 0.6rem;
+  margin-bottom: 0.25rem;
+  align-items: baseline;
+}
+.notebook-step-num {
+  font-family: var(--hand-font, 'Caveat', cursive);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 2;
+  text-align: right;
+}
+.notebook-step-text {
+  font-family: var(--body-font, 'Crimson Pro', Georgia, serif);
+  font-size: 1.02rem;
+  line-height: 2;
+  color: var(--foreground);
+}
+
+/* ── DIVIDER ── */
+.notebook-divider {
+  border: none;
+  border-top: 1.5px dashed color-mix(in srgb, var(--accent) 30%, transparent);
+  margin: 1.75rem 0;
+}
+
+/* ── META CHIPS ── */
+.notebook-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── STICKY NOTE (used for comments section) ── */
+.sticky-note {
+  background: color-mix(in srgb, var(--accent-light) 60%, var(--card));
+  border: 1px solid var(--border-light);
+  border-radius: 3px 3px 3px 3px;
+  padding: 0.9rem 1.1rem;
+  box-shadow: 2px 3px 8px var(--shadow), 0 1px 0 var(--border-light);
+  position: relative;
+}
+
+/* Tape strip on sticky */
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 12px;
+  background: color-mix(in srgb, var(--accent-light) 80%, transparent);
+  border: 1px solid var(--border-light);
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+/* ── COMMENT CARDS in notebook style ── */
+.notebook-comment {
+  background: var(--card);
+  border-left: 3px solid var(--accent);
+  padding: 0.75rem 1rem;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 8px var(--shadow);
+  margin-bottom: 0;
+}
+
+/* ── TAB LABELS ── (section index on right edge) ── */
+.notebook-tab {
+  position: absolute;
+  right: -1px;
+  writing-mode: vertical-lr;
+  background: var(--accent);
+  color: var(--button-text);
+  font-family: var(--hand-font, 'Caveat', cursive);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.6rem 0.3rem;
+  border-radius: 0 4px 4px 0;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+
+/* ── IMAGE BLOCK ── 
+   Photos feel pasted in, polaroid-style */
+.notebook-photo {
+  display: inline-block;
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  padding: 0.5rem 0.5rem 1.75rem;
+  box-shadow: 2px 3px 12px var(--shadow), 1px 1px 0 var(--border);
+  transform: rotate(-0.8deg);
+  margin: 0.25rem;
+  transition: transform 0.2s ease;
+}
+.notebook-photo:nth-child(even) { transform: rotate(0.7deg); }
+.notebook-photo:hover { transform: rotate(0deg) scale(1.02); z-index: 5; }
+.notebook-photo img { display: block; }
+.notebook-photo-caption {
+  font-family: var(--hand-font, 'Caveat', cursive);
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 0.4rem;
+}
+
+/* ── ACTIONS ROW ── */
+.notebook-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .notebook-content {
+    padding: 1.5rem 1.25rem 2rem 60px;
+  }
+
+  .notebook-paper::before {
+    left: 48px;
+  }
+
+  .notebook-paper::after {
+    width: 36px;
+    background:
+      radial-gradient(circle 6px at 18px 48px, var(--background) 5px, transparent 6px),
+      radial-gradient(circle 6px at 18px 136px, var(--background) 5px, transparent 6px),
+      radial-gradient(circle 6px at 18px 224px, var(--background) 5px, transparent 6px),
+      radial-gradient(circle 6px at 18px 312px, var(--background) 5px, transparent 6px),
+      radial-gradient(circle 6px at 18px 400px, var(--background) 5px, transparent 6px),
+      radial-gradient(circle 6px at 18px 488px, var(--background) 5px, transparent 6px),
+      radial-gradient(circle 6px at 18px 576px, var(--background) 5px, transparent 6px);
+    background-color: color-mix(in srgb, var(--background) 90%, var(--border));
+  }
+
+  .notebook-title { font-size: 1.65rem; }
+}
