@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ import {
   ShieldCheck, ShieldOff, Ban, UserCheck,
   ChevronLeft, ChevronRight, Tag, Zap, Users, Shield
 } from "lucide-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface AdminUser {
   id: string;
@@ -32,6 +33,8 @@ type AdminSection = "users" | "tags" | "efforts";
 
 export default function AdminPage() {
   const router = useRouter();
+  const routerRef = useRef(router);
+  routerRef.current = router;
   const [authChecked, setAuthChecked] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -56,22 +59,26 @@ export default function AdminPage() {
   // UI
   const [activeSection, setActiveSection] = useState<AdminSection>("users");
 
-  // ── Auth guard
+  // ── Auth guard (run once on mount)
   useEffect(() => {
+    let cancelled = false;
     async function checkAdmin() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { router.replace("/auth/login"); return; }
+      if (cancelled) return;
+      if (!user) { routerRef.current.replace("/auth/login"); return; }
 
       const { data } = await supabase
         .from("users").select("is_admin").eq("id", user.id).single();
+      if (cancelled) return;
 
-      if (!data?.is_admin) { router.replace("/recipes"); return; }
+      if (!data?.is_admin) { routerRef.current.replace("/recipes"); return; }
 
       setIsAdmin(true);
       setAuthChecked(true);
     }
     checkAdmin();
-  }, [router]);
+    return () => { cancelled = true; };
+  }, []);
 
   const loadUsers = useCallback(async () => {
     let query = supabase
@@ -151,10 +158,9 @@ export default function AdminPage() {
     return (
       <div style={{
         display: "flex", alignItems: "center", justifyContent: "center",
-        minHeight: "60vh", color: "var(--muted)",
-        fontFamily: "var(--hand-font, 'Caveat', cursive)", fontSize: "1.2rem",
+        minHeight: "60vh",
       }}>
-        Checking credentials…
+        <LoadingSpinner size="md" message="Checking credentials..." />
       </div>
     );
   }
@@ -461,7 +467,7 @@ export default function AdminPage() {
                 onFocus={e => (e.target as HTMLInputElement).style.borderColor = "var(--accent)"}
                 onBlur={e => (e.target as HTMLInputElement).style.borderColor = "var(--border)"}
               />
-              <button onClick={addTag} disabled={!newTag.trim()} className="btn-primary"
+              <button type="button" onClick={addTag} disabled={!newTag.trim()} className="btn-primary"
                 style={{ flexShrink: 0, padding: "0.55rem 0.9rem", opacity: !newTag.trim() ? 0.5 : 1 }}>
                 <Plus size={17} />
               </button>
@@ -484,16 +490,16 @@ export default function AdminPage() {
                         onKeyDown={e => { if (e.key === "Enter") saveTag(t.id); if (e.key === "Escape") setEditingTagId(null); }}
                         style={{ ...inputStyle, flex: 1, padding: "0.35rem 0.6rem", fontSize: "0.92rem", boxShadow: "none" }}
                       />
-                      <button onClick={() => saveTag(t.id)} style={iconBtnStyle("var(--accent)")}><Check size={14} /></button>
-                      <button onClick={() => setEditingTagId(null)} style={iconBtnStyle("var(--muted)")}><X size={14} /></button>
+                      <button type="button" onClick={() => saveTag(t.id)} style={iconBtnStyle("var(--accent)")}><Check size={14} /></button>
+                      <button type="button" onClick={() => setEditingTagId(null)} style={iconBtnStyle("var(--muted)")}><X size={14} /></button>
                     </>
                   ) : (
                     <>
                       <span style={{ flex: 1, fontFamily: "var(--body-font)", fontSize: "0.95rem", color: "var(--foreground)", fontWeight: 500 }}>
                         {t.name}
                       </span>
-                      <button onClick={() => { setEditingTagId(t.id); setEditingTagValue(t.name); }} style={iconBtnStyle("var(--accent)")}><Edit2 size={14} /></button>
-                      <button onClick={() => deleteTag(t.id)} style={iconBtnStyle("#b03020")}><Trash2 size={14} /></button>
+                      <button type="button" onClick={() => { setEditingTagId(t.id); setEditingTagValue(t.name); }} style={iconBtnStyle("var(--accent)")}><Edit2 size={14} /></button>
+                      <button type="button" onClick={() => deleteTag(t.id)} style={iconBtnStyle("#b03020")}><Trash2 size={14} /></button>
                     </>
                   )}
                 </div>
@@ -517,7 +523,7 @@ export default function AdminPage() {
                 onFocus={e => (e.target as HTMLInputElement).style.borderColor = "var(--accent)"}
                 onBlur={e => (e.target as HTMLInputElement).style.borderColor = "var(--border)"}
               />
-              <button onClick={addEffort} disabled={!newEffort.trim()} className="btn-primary"
+              <button type="button" onClick={addEffort} disabled={!newEffort.trim()} className="btn-primary"
                 style={{ flexShrink: 0, padding: "0.55rem 0.9rem", opacity: !newEffort.trim() ? 0.5 : 1 }}>
                 <Plus size={17} />
               </button>
@@ -540,16 +546,16 @@ export default function AdminPage() {
                         onKeyDown={ev => { if (ev.key === "Enter") saveEffort(e.id); if (ev.key === "Escape") setEditingEffortId(null); }}
                         style={{ ...inputStyle, flex: 1, padding: "0.35rem 0.6rem", fontSize: "0.92rem", boxShadow: "none" }}
                       />
-                      <button onClick={() => saveEffort(e.id)} style={iconBtnStyle("var(--accent)")}><Check size={14} /></button>
-                      <button onClick={() => setEditingEffortId(null)} style={iconBtnStyle("var(--muted)")}><X size={14} /></button>
+                      <button type="button" onClick={() => saveEffort(e.id)} style={iconBtnStyle("var(--accent)")}><Check size={14} /></button>
+                      <button type="button" onClick={() => setEditingEffortId(null)} style={iconBtnStyle("var(--muted)")}><X size={14} /></button>
                     </>
                   ) : (
                     <>
                       <span style={{ flex: 1, fontFamily: "var(--body-font)", fontSize: "0.95rem", color: "var(--foreground)", fontWeight: 500 }}>
                         {e.name}
                       </span>
-                      <button onClick={() => { setEditingEffortId(e.id); setEditingEffortValue(e.name); }} style={iconBtnStyle("var(--accent)")}><Edit2 size={14} /></button>
-                      <button onClick={() => deleteEffort(e.id)} style={iconBtnStyle("#b03020")}><Trash2 size={14} /></button>
+                      <button type="button" onClick={() => { setEditingEffortId(e.id); setEditingEffortValue(e.name); }} style={iconBtnStyle("var(--accent)")}><Edit2 size={14} /></button>
+                      <button type="button" onClick={() => deleteEffort(e.id)} style={iconBtnStyle("#b03020")}><Trash2 size={14} /></button>
                     </>
                   )}
                 </div>
@@ -596,17 +602,4 @@ function AdminCard({ title, icon, children }: {
       </div>
     </div>
   );
-}
-
-/* ── Icon button helper ── */
-function iconBtnStyle(color: string): React.CSSProperties {
-  return {
-    display: "flex", alignItems: "center", justifyContent: "center",
-    width: 32, height: 32, borderRadius: "6px", flexShrink: 0,
-    background: `color-mix(in srgb, ${color} 12%, transparent)`,
-    color,
-    border: `1.5px solid color-mix(in srgb, ${color} 30%, transparent)`,
-    cursor: "pointer",
-    transition: "all 0.15s ease",
-  };
 }

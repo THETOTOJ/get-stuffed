@@ -9,18 +9,8 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth event:", event, session);
-
-      if (event === "SIGNED_IN") {
-        console.log("User logged in:", session?.user);
-      }
-      if (event === "SIGNED_OUT") {
-        console.log("User signed out");
-      }
-      if (event === "PASSWORD_RECOVERY") {
-        console.log("Password recovery flow started");
-      }
+    } = supabase.auth.onAuthStateChange(() => {
+      // Keep session in sync
     });
 
     return () => subscription.unsubscribe();
